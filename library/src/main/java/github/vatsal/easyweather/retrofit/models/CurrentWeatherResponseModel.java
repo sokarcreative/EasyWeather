@@ -32,7 +32,9 @@ public class CurrentWeatherResponseModel {
 
     private Weather[] weather;
 
-    private String rain;
+    private Rain rain;
+
+    private Snow snow;
 
     private Main main;
 
@@ -116,12 +118,20 @@ public class CurrentWeatherResponseModel {
         this.weather = weather;
     }
 
-    public String getRain() {
+    public Rain getRain() {
         return rain;
     }
 
-    public void setRain(String rain) {
+    public void setRain(Rain rain) {
         this.rain = rain;
+    }
+
+    public Snow getSnow() {
+        return snow;
+    }
+
+    public void setSnow(Snow snow) {
+        this.snow = snow;
     }
 
     public Main getMain() {
@@ -145,7 +155,8 @@ public class CurrentWeatherResponseModel {
                 ", name='" + name + '\'' +
                 ", base='" + base + '\'' +
                 ", weather=" + Arrays.toString(weather) +
-                ", rain='" + rain + '\'' +
+                ", rain=" + rain +
+                ", snow=" + snow +
                 ", main=" + main +
                 '}';
     }

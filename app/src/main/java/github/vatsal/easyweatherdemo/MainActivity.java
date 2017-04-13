@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,6 +13,8 @@ import com.squareup.picasso.Picasso;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import github.pwittchen.weathericonview.WeatherIconView;
+import github.vatsal.easyweather.EasyWeatherUtil;
 import github.vatsal.easyweather.Helper.TempUnitConverter;
 import github.vatsal.easyweather.Helper.WeatherCallback;
 import github.vatsal.easyweather.retrofit.api.WeatherMap;
@@ -31,8 +32,6 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.weather_title)
     TextView weatherTitle;
-    @BindView(R.id.refresh)
-    ImageButton refresh;
     @BindView(R.id.weather_icon)
     ImageView weatherIcon;
     @BindView(R.id.location)
@@ -67,6 +66,9 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout llExtraWeather;
     @BindView(R.id.weatherCard)
     CardView weatherCard;
+    @BindView(R.id.weatherIconViewCurrent)
+    WeatherIconView weatherIconViewCurrent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         loadWeather(city);
     }
 
-    @OnClick(R.id.refresh)
+    @OnClick(R.id.weatherIconViewCurrent)
     public void refresh() {
         loadWeather(city);
     }
@@ -86,13 +88,16 @@ public class MainActivity extends AppCompatActivity {
         weatherMap.getCityWeather(city, new WeatherCallback<CurrentWeatherResponseModel>() {
             @Override
             public void success(CurrentWeatherResponseModel response) {
-                populateWeather(response);
                 Log.i(response.toString());
+                populateWeather(response);
+                String weatherIcon = response.getWeather()[0].getIcon();
+                String weatherId = response.getWeather()[0].getId();
+                weatherIconViewCurrent.setIconResource(EasyWeatherUtil.getWeatherIcon(MainActivity.this, weatherId, weatherIcon));
             }
 
             @Override
             public void failure(String message) {
-
+                Log.i(message);
             }
         });
 
@@ -104,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void failure(String message) {
-
+                Log.i(message);
             }
         });
 
@@ -116,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void failure(String message) {
-
+                Log.i(message);
             }
         });
     }
