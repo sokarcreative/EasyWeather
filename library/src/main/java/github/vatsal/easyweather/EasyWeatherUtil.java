@@ -275,4 +275,15 @@ public class EasyWeatherUtil {
         }
         return "";
     }
+
+    public static String getHumidityIcon(){
+        return "\uf07a";
+    }
+    public static String getThermometerIcon(){
+        return "\uf055";
+    }
+    public static String getWindIcon(){
+        return "\uf050";
+    }
+
 }
